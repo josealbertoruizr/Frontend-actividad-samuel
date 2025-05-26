@@ -10,7 +10,7 @@ type Props = {
 
 export default function Item({ todo, onToggle, onDelete }: Props) {
   return (
-    <li className="flex items-center gap-2 p-2 border-b">
+    <li className="flex items-center gap-2 p-4 border-b">
       <input
         type="checkbox"
         checked={todo.completed}
