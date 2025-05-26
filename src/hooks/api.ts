@@ -1,38 +1,44 @@
-const BASE_URL = '/api/todos';
+const BASE_URL = "/api/todos";
+
+type Todo = {
+  id: string;
+  text: string;
+  completed: boolean;
+};
 
 export async function getTodos() {
-  const res = await fetch(BASE_URL, { cache: 'no-store' });
-  if (!res.ok) throw new Error('Error al obtener tareas');
+  const res = await fetch(BASE_URL, { cache: "no-store" });
+  if (!res.ok) throw new Error("Error al obtener tareas");
   const data = await res.json();
   // Map _id to id if needed
-  return data.map((todo: any) => ({
+  return data.map((todo: Todo) => ({
     ...todo,
-    id: todo.id ?? todo._id,
+    id: todo.id,
   }));
 }
 
 export async function createTodo(text: string) {
   const res = await fetch(BASE_URL, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ text }),
   });
-  if (!res.ok) throw new Error('Error al crear tarea');
+  if (!res.ok) throw new Error("Error al crear tarea");
   return res.json();
 }
 
 export async function toggleTodo(id: string) {
   const res = await fetch(`${BASE_URL}/${id}/toggle`, {
-    method: 'PATCH',
+    method: "PATCH",
   });
-  if (!res.ok) throw new Error('Error al actualizar tarea');
+  if (!res.ok) throw new Error("Error al actualizar tarea");
   return res.json();
 }
 
 export async function deleteTodo(id: string) {
   const res = await fetch(`${BASE_URL}/${id}`, {
-    method: 'DELETE',
+    method: "DELETE",
   });
-  if (!res.ok) throw new Error('Error al eliminar tarea');
+  if (!res.ok) throw new Error("Error al eliminar tarea");
   return res.json();
 }
