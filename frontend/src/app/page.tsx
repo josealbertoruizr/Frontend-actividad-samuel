@@ -17,21 +17,16 @@ export default function Home() {
     // si quieres precargar algo, podrías llamar a load()
   }, []);
 
-  const handleAdd = () => {
+  const handleAdd = async () => {
     const trimmed = text.trim();
     if (!trimmed) return;
 
-    // 1) Crear un nuevo objeto todo
-    const newTodo = {
-      _id: Date.now().toString(),
-      desc: trimmed,
-      completed: false,
-    };
+    // Llamas al endpoint y recibes el objeto creado
+    const created: any = await createTodo(trimmed);
 
-    // 2) Prepend en el arreglo de todos
-    setTodos([newTodo, ...todos]);
+    // Lo insertas directamente en tu estado
+    setTodos((prev) => [created, ...prev]);
 
-    // 3) Limpiar input
     setText("");
   };
 
