@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { TaskForm } from "./TaskList";
+import { TaskForm } from "./TaskForm";
 
 export type TaskType = {
   id: string;
