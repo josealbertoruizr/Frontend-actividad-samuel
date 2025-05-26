@@ -61,7 +61,7 @@ export default function Home() {
       <ul className='bg-white shadow rounded divide-y'>
         {todos.map((todo) => (
           <Item
-            key={todo._id}
+            key={todo.id}
             todo={todo}
             onToggle={handleToggle}
             onDelete={handleDelete}

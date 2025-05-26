@@ -1,6 +1,6 @@
 type Props = {
   todo: {
-    _id: string;
+    id: string;
     text: string;
     completed: boolean;
   };
@@ -14,7 +14,7 @@ export default function Item({ todo, onToggle, onDelete }: Props) {
       <input
         type='checkbox'
         checked={todo.completed}
-        onChange={() => onToggle(todo._id)}
+        onChange={() => onToggle(todo.id)}
         className='w-4 h-4 cursor-pointer'
       />
       <span
@@ -25,7 +25,7 @@ export default function Item({ todo, onToggle, onDelete }: Props) {
         {todo.text}
       </span>
       <button
-        onClick={() => onDelete(todo._id)}
+        onClick={() => onDelete(todo.id)}
         className='text-red-500 hover:text-red-700'
       >
         🗑️

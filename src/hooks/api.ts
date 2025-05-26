@@ -3,7 +3,12 @@ const BASE_URL = '/api/todos';
 export async function getTodos() {
   const res = await fetch(BASE_URL, { cache: 'no-store' });
   if (!res.ok) throw new Error('Error al obtener tareas');
-  return res.json();
+  const data = await res.json();
+  // Map _id to id if needed
+  return data.map((todo: any) => ({
+    ...todo,
+    id: todo.id ?? todo._id,
+  }));
 }
 
 export async function createTodo(text: string) {
