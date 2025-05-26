@@ -1,5 +1,5 @@
-import { createClient } from '@supabase/supabase-js';
-import { NextRequest, NextResponse } from 'next/server';
+import { createClient } from "@supabase/supabase-js";
+import { NextResponse } from "next/server";
 
 const supabase = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_URL!,
@@ -12,7 +12,7 @@ export async function DELETE(
 ) {
   const { id } = await context.params;
 
-  const { error } = await supabase.from('todos').delete().eq('id', id);
+  const { error } = await supabase.from("todos").delete().eq("id", id);
 
   if (error) return NextResponse.json({ error }, { status: 500 });
 
