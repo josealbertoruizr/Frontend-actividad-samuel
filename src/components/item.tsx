@@ -15,7 +15,7 @@ export default function Item({ todo, onToggle, onDelete }: Props) {
         type='checkbox'
         checked={todo.completed}
         onChange={() => onToggle(todo._id)}
-        className='w-4 h-4'
+        className='w-4 h-4 cursor-pointer'
       />
       <span
         className={`flex-1 ${

@@ -1,32 +1,38 @@
-import { NextResponse } from 'next/server';
 import { createClient } from '@supabase/supabase-js';
+import { NextResponse } from 'next/server';
 
 const supabase = createClient(
-  process.env.SUPABASE_URL!,
-  process.env.SUPABASE_KEY!
+  process.env.NEXT_PUBLIC_SUPABASE_URL!,
+  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
 );
 
 export async function PATCH(
-  _: Request,
-  { params }: { params: { id: string } }
+  req: Request,
+  context: { params: Promise<{ id: string }> }
 ) {
-  const { data: existing, error: findError } = await supabase
+  const { id } = await context.params;
+
+  const { data: existing, error: fetchError } = await supabase
     .from('todos')
     .select('completed')
-    .eq('id', params.id)
+    .eq('id', id)
     .single();
 
-  if (findError)
-    return NextResponse.json({ error: 'No encontrada' }, { status: 404 });
+  if (fetchError || !existing) {
+    return NextResponse.json(
+      { error: 'No se encontró la tarea' },
+      { status: 404 }
+    );
+  }
 
   const { data, error } = await supabase
     .from('todos')
     .update({ completed: !existing.completed })
-    .eq('id', params.id)
+    .eq('id', id)
     .select()
     .single();
 
-  if (error)
-    return NextResponse.json({ error: error.message }, { status: 500 });
+  if (error) return NextResponse.json({ error }, { status: 500 });
+
   return NextResponse.json(data);
 }

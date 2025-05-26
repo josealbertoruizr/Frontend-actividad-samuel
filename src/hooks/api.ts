@@ -1,4 +1,4 @@
-const BASE_URL = 'http://localhost:5000/todos';
+const BASE_URL = '/api/todos';
 
 export async function getTodos() {
   const res = await fetch(BASE_URL, { cache: 'no-store' });
@@ -13,6 +13,7 @@ export async function createTodo(text: string) {
     body: JSON.stringify({ text }),
   });
   if (!res.ok) throw new Error('Error al crear tarea');
+  return res.json();
 }
 
 export async function toggleTodo(id: string) {
@@ -20,6 +21,7 @@ export async function toggleTodo(id: string) {
     method: 'PATCH',
   });
   if (!res.ok) throw new Error('Error al actualizar tarea');
+  return res.json();
 }
 
 export async function deleteTodo(id: string) {
@@ -27,4 +29,5 @@ export async function deleteTodo(id: string) {
     method: 'DELETE',
   });
   if (!res.ok) throw new Error('Error al eliminar tarea');
+  return res.json();
 }
